@@ -1,0 +1,44 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+  post: CollectionEntry<"posts">;
+}
+
+const { post } = Astro.props;
+const { slug } = post;
+const { title, description, date, category, tags } = post.data;
+---
+
+<article class="border border-[var(--color-border)] rounded-lg p-5 bg-[var(--color-surface)] hover:shadow-md transition-shadow">
+  <div class="flex items-center gap-3 text-xs text-[var(--color-text-muted)] mb-2">
+    <time datetime={date.toISOString()}>
+      {date.toLocaleDateString("zh-CN", { year: "numeric", month: "2-digit", day: "2-digit" })}
+    </time>
+    {category && (
+      <>
+        <span>·</span>
+        <a href={`/categories/${category}`} class="text-[var(--color-primary)] hover:text-[var(--color-primary-dark)]">
+          {category}
+        </a>
+      </>
+    )}
+  </div>
+  <h2 class="text-lg font-semibold mb-2">
+    <a href={`/posts/${slug}`} class="text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors">
+      {title}
+    </a>
+  </h2>
+  {description && (
+    <p class="text-sm text-[var(--color-text-muted)] mb-3 line-clamp-2">{description}</p>
+  )}
+  {tags.length > 0 && (
+    <div class="flex flex-wrap gap-1.5">
+      {tags.map((tag) => (
+        <a href={`/tags/${tag}`} class="text-xs px-2 py-0.5 rounded-full bg-[var(--color-bg)] text-[var(--color-text-muted)] hover:text-[var(--color-primary)] transition-colors">
+          #{tag}
+        </a>
+      ))}
+    </div>
+  )}
+</article>

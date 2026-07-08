@@ -1,0 +1,38 @@
+---
+import { SITE, NAV } from "../consts";
+---
+
+<header class="sticky top-0 z-50 border-b backdrop-blur-md bg-[var(--color-bg)]/80 border-[var(--color-border)]">
+  <nav class="max-w-3xl mx-auto px-4 h-14 flex items-center justify-between">
+    <a href="/" class="font-bold text-lg text-[var(--color-text)] hover:text-[var(--color-primary)] transition-colors">
+      {SITE.title}
+    </a>
+    <div class="flex items-center gap-6 text-sm">
+      {NAV.map((item) => (
+        <a href={item.href} class="text-[var(--color-text-muted)] hover:text-[var(--color-text)] transition-colors hidden sm:inline">
+          {item.label}
+        </a>
+      ))}
+      <!-- Mobile menu placeholder -->
+      <button id="mobile-menu-btn" class="sm:hidden text-[var(--color-text-muted)] hover:text-[var(--color-text)]" aria-label="菜单">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </nav>
+  <!-- Mobile dropdown -->
+  <div id="mobile-menu" class="hidden sm:hidden border-t border-[var(--color-border)] bg-[var(--color-surface)]">
+    <div class="px-4 py-2 flex flex-col gap-2">
+      {NAV.map((item) => (
+        <a href={item.href} class="text-[var(--color-text-muted)] hover:text-[var(--color-text)] py-1 transition-colors">
+          {item.label}
+        </a>
+      ))}
+    </div>
+  </div>
+</header>
+
+<script>
+  document.getElementById('mobile-menu-btn')?.addEventListener('click', () => {
+    document.getElementById('mobile-menu')?.classList.toggle('hidden');
+  });
+</script>
